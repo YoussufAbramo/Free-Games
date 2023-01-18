@@ -17,26 +17,33 @@ xhr.addEventListener("readystatechange", function(){
 })
 
 function print_api(){
+  console.log("run fn")
   var api_div = ``;
   for(var i = 0; i < 5; i++){
     var random_game = Math.abs(Math.round(Math.random() * (10 - 70) + 10));
+    console.log("run for")
     api_div += `
       <div class="item d-flex">
         <div class="img">
-          <img src="${api_data[i].thumbnail}" alt="${api_data[i].title}">
+        <a href="${api_data[random_game].freetogame_profile_url}" target="_blank">
+          <img src="${api_data[random_game].thumbnail}" alt="${api_data[random_game].title}">
+        </a>
         </div>
-        <div class="info">
-          <h2>${api_data[i].title}</h2><span> | ${api_data[i].genre}</span>
-          <span>Expires in: ${api_data[i].release_date}</span>
-          <h3>Epic Store</h3>
-          <small>${asmalli_data[i].short_description}</small>
+        <div class="info d-flex">
+        <div>
+          <h2 >${api_data[random_game].title}</h2><span>  // ${api_data[random_game].genre}</span><br>
+        </div>
+        <div>
+          <h3>${api_data[random_game].platform}</h3><span> - ${api_data[random_game].developer}</span><br>
+        </div>
+          <span>Expires in: <b>${api_data[random_game].release_date}</b></span>
+          <small>${api_data[random_game].short_description}</small>
         </div>
         <div class="action d-flex">
-          <a href="${api_data[i].game_url}" target="_blank">Get It</a>
+          <a class="btn" href="${api_data[random_game].game_url}" target="_blank">Get It</a>
         </div>
       </div>
     `;
-    console.log(i);
     console.log(random_game);
   }
   document.getElementById("free_games").innerHTML = api_div;

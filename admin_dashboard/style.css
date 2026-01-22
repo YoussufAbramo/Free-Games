@@ -1,0 +1,259 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif
+}
+
+.login-body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+.login-card {
+    background: white;
+    padding: 35px;
+    width: 300px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.login-card input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.login-card button {
+    width: 100%;
+    padding: 10px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+body {
+    display: flex;
+    background: #f1f5f9;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #1e293b, #020617);
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    color: #cbd5e1;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #334155
+}
+
+.main {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.kpi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.kpi-card {
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+}
+
+.kpi-card span {
+    font-size: 14px
+}
+
+.blue {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8)
+}
+
+.green {
+    background: linear-gradient(135deg, #22c55e, #15803d)
+}
+
+.purple {
+    background: linear-gradient(135deg, #a855f7, #6d28d9)
+}
+
+.charts {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.chart-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.table-card {
+    background: white;
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.active {
+    background: #dcfce7;
+    color: #166534
+}
+
+.inactive {
+    background: #fee2e2;
+    color: #991b1b
+}
+
+
+/* DARK MODE */
+.dark-mode {
+    background: #020617;
+    color: #e5e7eb;
+}
+
+.dark-mode .main,
+.dark-mode .chart-card,
+.dark-mode .table-card,
+.dark-mode .kpi-card {
+    /* background:#020617; */
+    /* KPI cards have their own gradients */
+}
+
+/* override white backgrounds for cards in dark mode */
+.dark-mode .chart-card,
+.dark-mode .table-card {
+    background: #1e293b;
+    color: #e5e7eb;
+}
+
+.dark-mode table,
+.dark-mode th,
+.dark-mode td {
+    background: transparent;
+    color: #e5e7eb;
+    border-bottom-color: #334155;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.table-header button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.modal-box input,
+.modal-box select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+.modal-box button {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.close {
+    background: #e5e7eb;
+    color: black;
+}
+
+.error {
+    color: #dc2626;
+    background: #fee2e2;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}

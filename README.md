@@ -51,9 +51,9 @@ Professional WordPress & Web Developer dedicated to building high-quality digita
 - **YouTube**: [CodeCom.dev](https://youtube.com/@CodeCom_dev)
 - **LinkedIn**: [Youssuf Abramo](https://www.linkedin.com/in/youssuf-abramo/)
 - **Instagram**: [@youssuf.abramo](https://instagram.com/youssuf.abramo)
-- **TikTok**: [@youssuf_abramo](https://tiktok.com/@youssuf_abramo)
+- **TikTok**: [@youssufabramo](https://tiktok.com/@youssufabramo)
 - **Facebook**: [Youssuf Abramo](https://facebook.com/Joo.Abramo)
-- **Telegram**: [@YoussufAbramo](https://t.me/YoussufAbramo)
+- **Telegram**: [@Youssuf_Abramo](https://t.me/Youssuf_Abramo)
 - **WhatsApp**: [+201558612808](http://wa.me/201558612808)
 
 ---

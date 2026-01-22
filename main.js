@@ -39,6 +39,85 @@ function fetchData() {
 // Initial Call
 fetchData();
 
+// User Data Collection - Show after 30 seconds
+const hasSubmittedData = localStorage.getItem('userDataSubmitted');
+if (!hasSubmittedData) {
+  setTimeout(() => {
+    const userDataModal = document.getElementById('userDataModal');
+    userDataModal.style.display = 'block';
+  }, 30000); // 30 seconds
+}
+
+// Close User Data Modal
+window.closeUserDataModal = () => {
+  document.getElementById('userDataModal').style.display = 'none';
+};
+
+// Submit User Data
+window.submitUserData = async (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById('userName').value;
+  const email = document.getElementById('userEmail').value;
+
+  const userData = {
+    name: name,
+    email: email,
+    timestamp: new Date().toISOString()
+  };
+
+  try {
+    // Send to PHP backend API
+    const response = await fetch('api/save-user-data.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      localStorage.setItem('userDataSubmitted', 'true');
+      closeUserDataModal();
+      showNotification('Thank you for subscribing! 🎉');
+    } else {
+      // Show error message or fallback to local storage
+      console.error('API Error:', result.error);
+      saveUserDataLocally(userData);
+    }
+  } catch (error) {
+    // Fallback: save locally if backend is not available
+    console.error('Network Error:', error);
+    saveUserDataLocally(userData);
+  }
+};
+
+// Fallback local storage
+function saveUserDataLocally(userData) {
+  let existingData = JSON.parse(localStorage.getItem('userDataCollection') || '[]');
+  existingData.push(userData);
+  localStorage.setItem('userDataCollection', JSON.stringify(existingData));
+  localStorage.setItem('userDataSubmitted', 'true');
+  closeUserDataModal();
+  showNotification('Thank you for subscribing! 🎉');
+}
+
+// Show Notification Toast
+window.showNotification = (message) => {
+  const toast = document.getElementById('notificationToast');
+  const textElement = document.getElementById('notificationText');
+  textElement.textContent = message;
+
+  toast.classList.add('show');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+};
+
+
 // UI Event Listeners
 document.getElementById('listViewBtn').addEventListener('click', () => setView('list-view'));
 document.getElementById('gridViewBtn').addEventListener('click', () => setView('grid-view'));
@@ -66,8 +145,36 @@ document.getElementById('genreFilter').addEventListener('change', (e) => {
 
 document.getElementById('favoriteOnly').addEventListener('change', (e) => {
   state.favoritesOnly = e.target.checked;
+  updateFavoritesToggle();
   applyFilters();
 });
+
+// Update favorites toggle UI
+function updateFavoritesToggle() {
+  const checkbox = document.getElementById('favoriteOnly');
+  const label = document.querySelector('label[for="favoriteOnly"]');
+
+  if (checkbox.checked) {
+    label.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 5px;">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg> Return`;
+  } else {
+    label.innerHTML = '❤️ Favorites';
+  }
+}
+
+// Home button function - clears favorites filter and scrolls to top
+window.goHome = () => {
+  const checkbox = document.getElementById('favoriteOnly');
+  if (checkbox.checked) {
+    checkbox.checked = false;
+    state.favoritesOnly = false;
+    updateFavoritesToggle();
+    applyFilters();
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
 // Modal Logic
 const modal = document.getElementById("devModal");
@@ -122,8 +229,10 @@ window.toggleFavorite = (id) => {
   const index = favorites.indexOf(id);
   if (index === -1) {
     favorites.push(id);
+    showNotification('Added to favorites! ❤️');
   } else {
     favorites.splice(index, 1);
+    showNotification('Removed from favorites');
   }
   localStorage.setItem('freeGamesFavorites', JSON.stringify(favorites));
   renderApp();
@@ -165,13 +274,22 @@ window.closeDetailModal = () => {
 };
 
 // Image Viewer Logic
-window.showFullImage = (src) => {
+let currentImageIndex = 0;
+let currentScreenshots = [];
+
+window.showFullImage = (src, screenshots = []) => {
   const viewer = document.getElementById('imageViewerModal');
   const img = document.getElementById('fullSizeImage');
+
+  currentScreenshots = screenshots;
+  currentImageIndex = screenshots.findIndex(s => s.image === src);
+
   img.src = src;
   viewer.style.display = 'flex';
   viewer.style.alignItems = 'center';
   viewer.style.justifyContent = 'center';
+
+  updateImageNavButtons();
 
   if (viewer.requestFullscreen) {
     viewer.requestFullscreen().catch(err => console.log(err));
@@ -180,9 +298,43 @@ window.showFullImage = (src) => {
   }
 };
 
+window.navigateImage = (direction) => {
+  if (currentScreenshots.length === 0) return;
+
+  currentImageIndex += direction;
+
+  if (currentImageIndex < 0) currentImageIndex = 0;
+  if (currentImageIndex >= currentScreenshots.length) currentImageIndex = currentScreenshots.length - 1;
+
+  const img = document.getElementById('fullSizeImage');
+  img.src = currentScreenshots[currentImageIndex].image;
+
+  updateImageNavButtons();
+};
+
+function updateImageNavButtons() {
+  const prevBtn = document.querySelector('.image-nav-btn.prev');
+  const nextBtn = document.querySelector('.image-nav-btn.next');
+
+  if (prevBtn) prevBtn.disabled = currentImageIndex <= 0;
+  if (nextBtn) nextBtn.disabled = currentImageIndex >= currentScreenshots.length - 1;
+}
+
+// Keyboard navigation for images
+document.addEventListener('keydown', (e) => {
+  const viewer = document.getElementById('imageViewerModal');
+  if (viewer.style.display === 'flex') {
+    if (e.key === 'ArrowLeft') navigateImage(-1);
+    if (e.key === 'ArrowRight') navigateImage(1);
+    if (e.key === 'Escape') closeImageViewer();
+  }
+});
+
 window.closeImageViewer = () => {
   const viewer = document.getElementById('imageViewerModal');
   viewer.style.display = 'none';
+  currentScreenshots = [];
+  currentImageIndex = 0;
   if (document.fullscreenElement || document.webkitFullscreenElement) {
     if (document.exitFullscreen) document.exitFullscreen();
     else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
@@ -234,11 +386,13 @@ function renderGameDetail(game) {
 
   let screenshotsHtml = '';
   if (game.screenshots && game.screenshots.length > 0) {
+    // Store screenshots globally for navigation
+    window.currentGameScreenshots = game.screenshots;
     screenshotsHtml = `
       <div class="screenshots-container">
         <h3>Screenshots</h3>
         <div class="screenshots-row">
-          ${game.screenshots.map(s => `<img src="${s.image}" alt="Screenshot" onclick="window.showFullImage('${s.image}')">`).join('')}
+          ${game.screenshots.map(s => `<img src="${s.image}" alt="Screenshot" onclick="window.showFullImage('${s.image}', window.currentGameScreenshots)">`).join('')}
         </div>
       </div>
     `;
@@ -324,7 +478,7 @@ function renderApp() {
               <div id="share-menu-${game.id}" class="share-menu">
                 <a href="https://twitter.com/intent/tweet?text=Check out this free game: ${game.title}&url=${encodeURIComponent(game.game_url)}" target="_blank" class="share-link">Twitter</a>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(game.game_url)}" target="_blank" class="share-link">Facebook</a>
-                <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('${game.game_url}'); alert('Link copied!')" class="share-link">Copy Link</a>
+                <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('${game.game_url}'); window.showNotification('Link copied to clipboard! 🔗')" class="share-link">Copy Link</a>
               </div>
             </div>
           </div>

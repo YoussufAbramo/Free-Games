@@ -1,0 +1,13 @@
+# Zip files
+*.zip
+
+# User data (protected)
+user_data.json
+
+# Node.js files (not needed - using PHP)
+node_modules/
+package.json
+package-lock.json
+api/save-user-data.js
+
+# Security: Change admin password in api/admin.php before deployment!

@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+<<<<<<< HEAD
     background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
     overflow: hidden;
 }
@@ -56,10 +57,23 @@
     color: #64748b;
     margin-bottom: 35px;
     font-size: 1rem;
+=======
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+.login-card {
+    background: white;
+    padding: 35px;
+    width: 300px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 }
 
 .login-card input {
     width: 100%;
+<<<<<<< HEAD
     padding: 14px 20px;
     margin: 12px 0;
     background: rgba(0, 0, 0, 0.3);
@@ -75,10 +89,15 @@
     border-color: rgba(59, 130, 246, 0.5);
     background: rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+=======
+    padding: 10px;
+    margin: 10px 0;
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 }
 
 .login-card button {
     width: 100%;
+<<<<<<< HEAD
     padding: 14px;
     margin-top: 20px;
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
@@ -100,6 +119,13 @@
 
 .login-card button:active {
     transform: translateY(0);
+=======
+    padding: 10px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 }
 
 body {
@@ -124,6 +150,7 @@ body {
 
 .sidebar a {
     display: block;
+<<<<<<< HEAD
     padding: 12px 15px;
     color: #cbd5e1;
     cursor: pointer;
@@ -143,6 +170,16 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     color: white;
     transform: translateX(5px);
+=======
+    padding: 10px;
+    color: #cbd5e1;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #334155
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 }
 
 .main {
@@ -198,9 +235,12 @@ body {
     background: white;
     padding: 20px;
     border-radius: 12px;
+<<<<<<< HEAD
     height: 400px;
     position: relative;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+=======
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 }
 
 .table-card {
@@ -239,20 +279,40 @@ td {
 }
 
 
+<<<<<<< HEAD
 /* DARK MODE - Softened */
 .dark-mode {
     background: #111827;
     /* Gray 900 - softer than #020617 */
     color: #f3f4f6;
+=======
+/* DARK MODE */
+.dark-mode {
+    background: #020617;
+    color: #e5e7eb;
+}
+
+.dark-mode .main,
+.dark-mode .chart-card,
+.dark-mode .table-card,
+.dark-mode .kpi-card {
+    /* background:#020617; */
+    /* KPI cards have their own gradients */
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 }
 
 /* override white backgrounds for cards in dark mode */
 .dark-mode .chart-card,
 .dark-mode .table-card {
+<<<<<<< HEAD
     background: #1f2937;
     /* Gray 800 */
     color: #f3f4f6;
     border: 1px solid #374151;
+=======
+    background: #1e293b;
+    color: #e5e7eb;
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 }
 
 .dark-mode table,

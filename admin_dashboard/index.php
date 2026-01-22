@@ -36,8 +36,11 @@ $isLoggedIn = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'
 $userData = [];
 $dataFile = __DIR__ . '/../user_data.json';
 $todayCount = 0;
+<<<<<<< HEAD
 $chartLabels = [];
 $chartValues = [];
+=======
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 
 if ($isLoggedIn && file_exists($dataFile)) {
     $fileContents = file_get_contents($dataFile);
@@ -45,6 +48,7 @@ if ($isLoggedIn && file_exists($dataFile)) {
 
     // Calculate stats
     $today = date('Y-m-d');
+<<<<<<< HEAD
     $chartData = [];
 
     // Initialize last 7 days for the chart
@@ -73,6 +77,11 @@ if ($isLoggedIn && file_exists($dataFile)) {
     // Prepare labels and values for JavaScript
     $chartLabels = array_keys($chartData);
     $chartValues = array_values($chartData);
+=======
+    $todayCount = count(array_filter($userData, function ($user) use ($today) {
+        return isset($user['timestamp']) && strpos($user['timestamp'], $today) === 0;
+    }));
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
 }
 ?>
 <!DOCTYPE html>
@@ -111,12 +120,16 @@ if ($isLoggedIn && file_exists($dataFile)) {
     <?php else: ?>
         <!-- DASHBOARD VIEW -->
         <div class="sidebar">
+<<<<<<< HEAD
             <div
                 style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <img src="../assets/vector/default-monochrome-white.svg" alt="Admin Logo"
                     style="width: 80%; max-width: 180px;">
             </div>
 
+=======
+            <h2>Free Games Admin</h2>
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
             <a href="#" class="active">Dashboard</a>
             <!-- <a href="#">Subscribers</a> -->
             <a href="?logout=1">Logout</a>
@@ -234,11 +247,16 @@ if ($isLoggedIn && file_exists($dataFile)) {
                 }
             }
 
+<<<<<<< HEAD
             // Basic Chart Setup (Real Data)
+=======
+            // Basic Chart Setup (Placeholder data)
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
             const ctx = document.getElementById('growthChart').getContext('2d');
             new Chart(ctx, {
                 type: 'line',
                 data: {
+<<<<<<< HEAD
                     labels: <?php echo json_encode($chartLabels); ?>,
                     datasets: [{
                         label: 'New Subscribers',
@@ -250,10 +268,19 @@ if ($isLoggedIn && file_exists($dataFile)) {
                         borderWidth: 3,
                         pointBackgroundColor: '#3b82f6',
                         pointRadius: 4
+=======
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Subscribers',
+                        data: [12, 19, 3, 5, 2, 3], // Placeholder
+                        borderColor: '#3b82f6',
+                        tension: 0.1
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
                     }]
                 },
                 options: {
                     responsive: true,
+<<<<<<< HEAD
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
@@ -268,6 +295,9 @@ if ($isLoggedIn && file_exists($dataFile)) {
                             }
                         }
                     }
+=======
+                    maintainAspectRatio: false
+>>>>>>> 7e1467045f3511c2b4eac4d598a0d2a58da55ada
                 }
             });
         </script>
